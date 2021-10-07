@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Grid } from 'semantic-ui-react';
 import './ExampleComponent.module.scss';
 
-const ExampleComponent = () => {
+const ExampleComponent = ({ title }) => {
     return (
         <Container>
             <Grid columns="16">
