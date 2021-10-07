@@ -1,1 +1,30 @@
-@import '../../styles/scss/index.scss';
+$background: 'http://172.26.0.114:8080/farhos/VAADIN/themes/farhos/fondo.jpg';
+
+.login {
+  background-image: url($background);
+  min-height: 100vh;
+  height: 100vh;
+
+  &__grid {
+    height: 100%;
+  }
+  &__row {
+    height: 100%;
+  }
+  &__content {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    height: 100% !important;
+  }
+}
+
+.log-in-container {
+  padding: 35px 50px !important;
+  background-color: rgba(0, 0, 0, 0.65);
+  width: 40vw;
+  min-height: 40vh;
+  &__title {
+    color: white !important;
+  }
+}
