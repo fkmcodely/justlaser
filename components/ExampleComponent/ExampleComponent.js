@@ -7,11 +7,8 @@ const ExampleComponent = ({ title }) => {
         <Container>
             <Grid columns="16">
                 <Grid.Row>
-                    <Grid.Column width="8">
-                        Sección 1
-                    </Grid.Column>
-                    <Grid.Column width="8">
-                        Sección 2
+                    <Grid.Column width="16">
+                        {title}
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
