@@ -18,9 +18,11 @@ export default function Home() {
 
   useEffect(() => {
     const session = async (req,res) => {
-      const {user} = await getSession({ req });
-      if(user) {
-        setUser(user);
+      const user = await getSession({ req });
+      if(user?.user) {
+        setUser(user.user);
+      } else {
+        setUser(false);
       }
     }
     session();
