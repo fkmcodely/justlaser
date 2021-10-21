@@ -6,6 +6,7 @@ import { useSession, signIn, singOut, getSession, signOut } from "next-auth/clie
 import Banner from "../components/Banner";
 import Steps from "../components/Steps/Steps";
 import Services from "../components/Services";
+import Reviews from "../components/Reviews/Reviews";
 const languages = {
   en: require('../locale/en/commons.json'),
   es: require('../locale/es/commons.json'),
@@ -35,6 +36,7 @@ export default function Home() {
       <Banner />
       <Steps />
       <Services />
+      <Reviews />
     </>
   );
 }
