@@ -7,6 +7,8 @@ import Banner from "../components/Banner";
 import Steps from "../components/Steps/Steps";
 import Services from "../components/Services";
 import Reviews from "../components/Reviews/Reviews";
+import ContactForm from "../components/ContactForm/ContactForm";
+
 const languages = {
   en: require('../locale/en/commons.json'),
   es: require('../locale/es/commons.json'),
@@ -37,6 +39,7 @@ export default function Home() {
       <Steps />
       <Services />
       <Reviews />
+      <ContactForm />
     </>
   );
 }
