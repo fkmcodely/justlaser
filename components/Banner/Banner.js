@@ -21,7 +21,6 @@ const Banner = () => {
                     </Grid.Column>
                     <Grid.Column width="8" className="banner__start-shop">
                         <div>
-                            <Image src="http://localhost:3000/upload.png" alt="" />
                             <p>
                                 Si ya tienes lo archivos, puedes subir archivos desde la página de materiales o directamente aquí.
                             </p>

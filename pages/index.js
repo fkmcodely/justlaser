@@ -4,7 +4,8 @@ import ExampleComponent from "../components/ExampleComponent";
 import styles from "../styles/Home.module.css";
 import { useSession, signIn, singOut, getSession, signOut } from "next-auth/client";
 import Banner from "../components/Banner";
-
+import Steps from "../components/Steps/Steps";
+import Services from "../components/Services";
 const languages = {
   en: require('../locale/en/commons.json'),
   es: require('../locale/es/commons.json'),
@@ -32,6 +33,8 @@ export default function Home() {
   return (
     <>
       <Banner />
+      <Steps />
+      <Services />
     </>
   );
 }
