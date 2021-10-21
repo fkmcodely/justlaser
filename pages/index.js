@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import ExampleComponent from "../components/ExampleComponent";
 import styles from "../styles/Home.module.css";
 import { useSession, signIn, singOut, getSession, signOut } from "next-auth/client";
+import Banner from "../components/Banner";
 
 const languages = {
   en: require('../locale/en/commons.json'),
@@ -29,18 +30,8 @@ export default function Home() {
   },[])
 
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <ExampleComponent  title={localCopy.appName} />
-        <p>Iniciar Sesión</p>
-        { user && (
-          <>
-            <p>Bienvenido, {user.name}</p>
-            <button onClick={signOut}>Cerrar Sesión</button>
-          </>
-        )}
-        { !user && (<button onClick={signIn}>Iniciar Sesión</button>)}
-      </main>
-    </div>
+    <>
+      <Banner />
+    </>
   );
 }
