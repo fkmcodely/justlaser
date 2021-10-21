@@ -12,7 +12,7 @@ const Banner = () => {
                             Tanto si controlas programas de diseño como si simplemente tienes una idea que quieres realizar, 
                             estamos aquí para hacerla realidad. 
                             <ul>
-                                <li>- Lee el Manual de preparación de archivos.</li>
+                                <li>- Lee el <a href="/manual">manual</a> de preparación de archivos.</li>
                                 <li>- Consulta nuestra gama de materiales.</li>
                                 <li>- Descarga nuestra plantilla de trabajo, en AutoCAD o en Illustrator. </li>
                                 <li>-Si aun tienes dudas, o necesitas ayuda con tu diseño, contáctanos.</li>

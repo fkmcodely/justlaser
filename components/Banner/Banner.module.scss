@@ -1,5 +1,5 @@
 .banner {
-    background-image: url('http://localhost:3000/background.png');
+    background-image: url('http://localhost:3000/prueba.jpg');
     height: 450px;
     background-repeat: no-repeat;
     background-position: center;
@@ -23,6 +23,11 @@
             margin-top: 2.5rem;
             list-style: none;
             padding-left: 0;
+            li {
+                a {
+                    font-weight: bolder;
+                }
+            }
         }
     }
     &__start-shop {

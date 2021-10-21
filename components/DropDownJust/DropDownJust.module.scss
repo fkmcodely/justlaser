@@ -1,0 +1,10 @@
+.dropdownjust {
+    min-height: 60vh;
+    padding-top: 40px !important;
+
+    &__questions {
+        display: flex !important;
+        justify-content: center !important;
+        padding: 30px 10px !important;
+    }
+}

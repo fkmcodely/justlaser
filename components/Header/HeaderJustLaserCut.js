@@ -14,13 +14,13 @@ const HeaderJustLaserCut = () => {
                             </div>
                         </Grid.Column>
                         <Grid.Column width={6}>
-                        <img src='http://localhost:3000/JustLaseLogo.png' />
+                            <img src='http://localhost:3000/JustLaseLogo.png' />
                         </Grid.Column>
                         <Grid.Column width={5} className="header-just__user-experience-container">
-                        <nav className="header-just__user-experience">
-                            <p>Contacto</p>
-                            <p>Registro</p>
-                        </nav>
+                            <nav className="header-just__user-experience">
+                                <p>Contacto</p>
+                                <p>Registro</p>
+                            </nav>
                         </Grid.Column>
                     </Grid.Row>
                     <MenuJust />        
