@@ -41,7 +41,7 @@ const MenuJust = () => {
                     <Menu pointing secondary className="menu-just__container">
                         {
                             NavigationOptions.map((page,index) => (
-                                <Menu.Item active={index === 0 ? true : false}>
+                                <Menu.Item key={index} active={index === 0 ? true : false}>
                                     {page}
                                 </Menu.Item>        
                             ))

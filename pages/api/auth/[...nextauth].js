@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
-import { signIn } from "next-auth/client";
-import CredentialsProvider from "next-auth/providers/credentials";
+import CredentialsProvider from 'next-auth/providers/credentials'
 
 export default NextAuth({
     providers: [
@@ -20,6 +19,7 @@ export default NextAuth({
             },
         })
     ],
+
     session: {
         jwt: true,
         maxAge: 30 * 24 * 60 * 60,

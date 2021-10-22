@@ -19,7 +19,7 @@ const Steps = () => {
                         <Header as="h2">Cómo funciona</Header>
                     </Grid.Row>
                     <Grid.Row className="step-just__container-items">
-                        { steps.map(step => <Step description={step} />)}
+                        { steps.map((step,key) => <Step key={key} description={step} />)}
                     </Grid.Row>
                 </Grid>
             </Container>

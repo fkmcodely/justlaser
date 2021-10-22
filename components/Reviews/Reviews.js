@@ -23,8 +23,8 @@ const Reviews = () => {
                 <Grid columns="16">
                     <Grid.Row className="reviews__list">
                         {
-                            reviews?.map((review) => (
-                            <Review {...review} />
+                            reviews?.map((review,keyItem) => (
+                            <Review {...review} key={keyItem} />
                             ))
                         }
                     </Grid.Row>

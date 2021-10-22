@@ -1,8 +1,6 @@
 import React, { useEffect , useState } from "react";
 import { useRouter } from "next/router";
-import ExampleComponent from "../components/ExampleComponent";
-import styles from "../styles/Home.module.css";
-import { useSession, signIn, singOut, getSession, signOut } from "next-auth/client";
+import { useSession, signIn, singOut, getSession, signOut } from "next-auth/react";
 import Banner from "../components/Banner";
 import Steps from "../components/Steps/Steps";
 import Services from "../components/Services";
@@ -14,7 +12,7 @@ const languages = {
   es: require('../locale/es/commons.json'),
 }
 
-export default function Home() {
+export default function Home({ message }) {
   const router = useRouter();
   const [user,setUser] = useState();
   const { locale } = router;
@@ -43,3 +41,12 @@ export default function Home() {
     </>
   );
 }
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      'message':'hello world'
+    }
+  }
+}
+
