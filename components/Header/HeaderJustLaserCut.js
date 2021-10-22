@@ -1,7 +1,10 @@
 import React from 'react';
 import { Container, Grid, Menu } from 'semantic-ui-react';
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const HeaderJustLaserCut = () => {
+    const { data: session } = useSession();
+    console.log(session)
     return (
         <Container fluid className="header-just">
             <Container>
@@ -20,6 +23,9 @@ const HeaderJustLaserCut = () => {
                             <nav className="header-just__user-experience">
                                 <p>Contacto</p>
                                 <p>Registro</p>
+                                
+                                { !session && (<p onClick={() => signIn()}>Iniciar Sesión</p>)}
+                                { session && (<p onClick={() => signOut()}>Cerrar Sesión</p>)}
                             </nav>
                         </Grid.Column>
                     </Grid.Row>

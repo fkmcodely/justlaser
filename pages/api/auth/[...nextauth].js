@@ -1,5 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { MongoClient } from "mongodb";
+const bcrypt = require('bcrypt');
+const url =  'mongodb+srv://administrador:administrador@cluster0.fwkm6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
 export default NextAuth({
     providers: [
@@ -10,12 +13,29 @@ export default NextAuth({
                 password: { label: "Clave" , type : "password", placeholder: "******"},
             },
             async authorize(credentials = {}, req) {
-                const user = {
-                    name: 'Kevin',
-                    email: 'Rivera',
-                    image: 'avatar'
+                const { username , password } = req.body;
+                let user;
+                try {
+                    const client = await MongoClient.connect(url);
+                    const db = client.db();
+                    const collection = db.collection("customers");
+                    const request = await collection.findOne({email: username })
+
+                    if (request.password) {
+                        if (bcrypt.compareSync(password,request.password)) {
+                           user = request;
+                        }
+                    } else {
+                        user = null;
+                    }
+                } catch (err) {
+                    console.log(err);
                 }
-                return user;
+                if (user) {
+                    return user;
+                } else {
+                    return null
+                }
             },
         })
     ],
@@ -26,17 +46,11 @@ export default NextAuth({
         updateAge: 26 * 60 * 60
     },
     callbacks: {
-        async signIn(session, token) {
-            session.user = token.user;
-            return session
+        async signIn({ user , account, profile, email, crendetials}) {
+            return true;
         },
-        async jwt(token, user) {
-            if (user) token.user = user;
+        async jwt({ token, user, account, profile, isNewUser}) {
             return token;
         },
-        async session(session, token) {
-            session.user = token.user;
-            return session;
-        }
     },
 });

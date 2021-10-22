@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import HeaderJustLaserCut from '../components/Header/HeaderJustLaserCut';
 import FooterJust from '../components/FooterJust/FooterJust';
 import { SessionProvider } from "next-auth/react"
-
 import '../styles/styles.scss';
 
 function VisualApp({ Component, pageProps }) {
