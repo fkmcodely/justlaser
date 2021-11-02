@@ -3,7 +3,7 @@ import { Container, Grid } from 'semantic-ui-react';
 
 const FooterJust = () => {
     return (
-       <Container fluid className="footer-just">
+       <Container fluid className="footer-just" id="footer-just">
            <Container>
                <Grid columns="16">
                    <Grid.Row>

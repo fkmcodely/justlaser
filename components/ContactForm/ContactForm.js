@@ -1,7 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Grid, Form, Input, Button, Header } from 'semantic-ui-react';
+import { useForm } from "react-hook-form";
+import { BASE_URL, BASE_URL_MONGO } from '../../constants/config';
+import axios from "axios";
 
 const ContactForm = () => {
+    const { register, handleSubmit, watch, reset, formState = { errors } } = useForm();
+    const [loading,setLoading] = useState(false);
+    
+    const onSubmit = data => {
+        const sendMessage = async () => {
+            try {
+                setLoading(true);
+                const response = axios.post(`${BASE_URL}api/contact`,{
+                    ...data
+                });
+                reset();
+                setLoading(false);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        sendMessage();
+    }
+    
     return (
         <Container fluid className="contact-form">
             <Container>
@@ -13,23 +35,24 @@ const ContactForm = () => {
                     </Grid.Row>
                     <Grid.Row className="contact-form__form">
                         <Grid.Column width="8">
-                            <Form>
+                            <Form onSubmit={handleSubmit(onSubmit)}>
                                 <Form.Field>
-                                    <Input type="email" placeholder="Correo Electronico" />
+                                    <input type="email" placeholder="Correo Electronico" {...register("email")} />
                                 </Form.Field>
                                 <Form.Field>
-                                    <Input type="number" min="0" placeholder="Número de referencia" />
+                                    <input type="number" min="0" placeholder="Número de referencia" {...register("numberRef")}/>
                                 </Form.Field>
                                 <Form.Field>
-                                    <Input type="text" placeholder="Asunto" />
+                                    <input type="text" placeholder="Asunto" {...register("subject")}/>
                                 </Form.Field>
                                 <Form.Field>
-                                    <textarea rows="5" placeholder="Mensaje" />
+                                    <textarea rows="5" placeholder="Mensaje" {...register("message")}/>
                                 </Form.Field>
                                 <Form.Field>
-                                    <Input type="file" placeholder="Mensaje" />
+                                    <Input type="file" placeholder="" />
                                 </Form.Field>
-                                <Button className="contact-form__btnsubmit" type='submit'>Enviar</Button>
+                               
+                                <Button loading={loading} type="submit" content='ENVIAR' primary />
                             </Form>
                         </Grid.Column>
                     </Grid.Row>

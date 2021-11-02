@@ -1,8 +1,8 @@
 import { MongoClient } from "mongodb";
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
-
-const url = 'mongodb+srv://administrador:administrador@cluster0.fwkm6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+import { BASE_URL_MONGO } from "../../constants/config";
+const url = BASE_URL_MONGO;
 
 export default function handler(req,res) {
     const { method } = req;
@@ -49,12 +49,10 @@ function registerUser({ body },res) {
             const collection = db.collection("customers");
             const response = await collection.insertOne(templateUser);
             client.close();
-            console.log(response)
             return res.status(200).json({
                
             })
         } catch(err) {
-            console.log(`Error: ${err}`)
             res.status(500)
         }
     }

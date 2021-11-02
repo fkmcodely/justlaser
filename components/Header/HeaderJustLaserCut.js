@@ -6,7 +6,7 @@ const HeaderJustLaserCut = () => {
     const { data: session } = useSession();
     console.log(session)
     return (
-        <Container fluid className="header-just">
+        <Container fluid className="header-just" id="header-just">
             <Container>
                 <Grid columns={16}>
                     <Grid.Row className="header-just__static">
@@ -25,7 +25,11 @@ const HeaderJustLaserCut = () => {
                                 <p>Registro</p>
                                 
                                 { !session && (<p onClick={() => signIn()}>Iniciar Sesión</p>)}
-                                { session && (<p onClick={() => signOut()}>Cerrar Sesión</p>)}
+                                { session && (
+                                    <>
+                                        <p>Bienvenido, {session.user.name}</p>
+                                    </>
+                                )}
                             </nav>
                         </Grid.Column>
                     </Grid.Row>
