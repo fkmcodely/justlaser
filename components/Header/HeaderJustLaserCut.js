@@ -30,6 +30,13 @@ const HeaderJustLaserCut = () => {
                                         <p>Bienvenido, {session.user.name}</p>
                                     </>
                                 )}
+                                <button
+                                    onClick={() =>
+                                    signIn("google", { callbackUrl: "http://localhost:3000/" })
+                                    }
+                                >
+                                    Iniciar Sesion Google
+                                </button>
                             </nav>
                         </Grid.Column>
                     </Grid.Row>

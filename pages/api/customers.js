@@ -36,12 +36,13 @@ function getUser({ body },res) {
 
 function registerUser({ body },res) {
     const fetch = async () => {
-        const { email , password, name } = body;
+        const { email , password, name, avatar = false } = body;
         const templateUser = {
             id: uuidv4(),
             email:email,
             password: bcrypt.hashSync(password,10),
             name: name,
+            avatar: avatar
         }
         try {
             const client = await MongoClient.connect(url);

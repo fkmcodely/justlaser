@@ -61,7 +61,7 @@ const createMessage = ({body},res) => {
     if (email && subject && message) {
         fetchMessage();
     } else {
-        res.status(500).json({
+        res.status(400).json({
             message: 'Falta información.'
         })
     }
