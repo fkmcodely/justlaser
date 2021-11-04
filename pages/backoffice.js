@@ -58,7 +58,7 @@ const HeaderOffice = () => {
             <Grid columns="16" className="header-backoffice__row">
                 <Grid.Row >
                     <Grid.Column width="5">
-                        <img className="header-backoffice__logo" src='http://localhost:3000/justlaserlogobackoffice.png' />
+                        <img className="header-backoffice__logo" src='./justlaserlogobackoffice.png' />
                     </Grid.Column>
                     <Grid.Column width="11">
                         

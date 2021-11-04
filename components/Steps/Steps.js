@@ -32,7 +32,7 @@ const Step = ({description}) => {
 
     return(
         <Grid.Column width={3} className="step-just">
-            <Image src="http://localhost:3000/Rectangle.png" />
+            <Image src="./Rectangle.png" />
             <p>{description}</p>
         </Grid.Column>
     )

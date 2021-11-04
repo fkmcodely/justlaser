@@ -16,7 +16,7 @@ export default function handler(req,res) {
 
 
 function getUser({ body },res) {
-    const { email , password } = body;
+    const { email } = body;
     const fetch = async () => {
         try {
             const client = await MongoClient.connect(url);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Grid, Menu } from 'semantic-ui-react';
 import { useSession, signIn, signOut } from "next-auth/react";
+import ModalSession from '../ModalSession';
 
 const HeaderJustLaserCut = () => {
     const { data: session } = useSession();
@@ -17,26 +18,18 @@ const HeaderJustLaserCut = () => {
                             </div>
                         </Grid.Column>
                         <Grid.Column width={6}>
-                            <img src='http://localhost:3000/JustLaseLogo.png' />
+                            <img src='./JustLaseLogo.png' />
                         </Grid.Column>
                         <Grid.Column width={5} className="header-just__user-experience-container">
                             <nav className="header-just__user-experience">
                                 <p>Contacto</p>
-                                <p>Registro</p>
-                                
-                                { !session && (<p onClick={() => signIn()}>Iniciar Sesión</p>)}
-                                { session && (
+                                { session ? (
                                     <>
                                         <p>Bienvenido, {session.user.name}</p>
                                     </>
+                                ):(
+                                    <ModalSession />
                                 )}
-                                <button
-                                    onClick={() =>
-                                    signIn("google", { callbackUrl: "http://localhost:3000/" })
-                                    }
-                                >
-                                    Iniciar Sesion Google
-                                </button>
                             </nav>
                         </Grid.Column>
                     </Grid.Row>
