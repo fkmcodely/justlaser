@@ -1,4 +1,3 @@
-import moment from "moment";
 import { MongoClient } from "mongodb";
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
@@ -7,12 +6,13 @@ const url = BASE_URL_MONGO;
 
 export default function handler(req,res) {
     const { method } = req;
+    const { users = false } = req.body;
    
     if(method === 'GET') {
         getUser(req,res);
     }
     if(method === 'POST') {
-        registerUser(req,res)
+        getUsers(req,res)
     }
 }
 
@@ -36,30 +36,23 @@ function getUser({ body },res) {
     fetch();
 };
 
-
-function registerUser({ body },res) {
+function getUsers({ body },res) {
     const fetch = async () => {
-        const { email , password, name, avatar = false } = body;
-        const templateUser = {
-            id: uuidv4(),
-            email:email,
-            password: bcrypt.hashSync(password,10),
-            name: name,
-            avatar: avatar,
-            createdAt: moment().format('DD-MM-YYYY')
-        }
         try {
             const client = await MongoClient.connect(url);
             const db = client.db();
             const collection = db.collection("customers");
-            const response = await collection.insertOne(templateUser);
-            client.close();
+            const request = await collection.find().toArray();
+
+            const filteredList = request.map(({ name , avatar , email }) => ({
+                name , avatar , email
+            }));
             return res.status(200).json({
-               
+               users: filteredList
             })
         } catch(err) {
-            res.status(500)
+            console.log(`Error: ${err}`)
         }
-    }
+    };
     fetch();
-}
+};

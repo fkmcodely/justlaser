@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect , useState } from 'react';
 import { Grid , Header , Table , Label , Menu} from "semantic-ui-react";
 import { BASE_URL } from '../../../constants/config';
+
 const Contact = () => {
     const [messagesList,setMessagesList] = useState([]);
     const [error,setError] = useState(false);

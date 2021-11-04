@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState} from 'react';
 import { Container, Grid } from 'semantic-ui-react';
-
+import { BACKOFFICE_OPTIONS } from "../constants/backofficeMenu";
 import Contact from '../components/BackOffice/Contact/Contact';
-const backoffice = () => {
+import Users from '../components/BackOffice/Users';
 
+const backoffice = () => {
+    const [menuSelected,setMenuSelected] = useState(5)
     useEffect(() => {
         document.getElementById('header-just').style.display = 'none';
         document.getElementById('footer-just').style.display = 'none';
@@ -16,10 +18,11 @@ const backoffice = () => {
             <Grid columns="16" className="backoffice__grid">
                 <Grid.Row  className="backoffice__row">
                     <Grid.Column width="3" className="backoffice__menu">
-                        <MenuBackOffice />
+                        <MenuBackOffice setMenuSelected={setMenuSelected} />
                     </Grid.Column>
                     <Grid.Column width="13">
-                        <Contact />
+                         { menuSelected === 5 && (<Users />)}
+                         { menuSelected === 6 && (<Contact />)}
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
@@ -30,21 +33,15 @@ const backoffice = () => {
 
 
 // MENU DEL BACKOFFICE 
-const MenuBackOffice = () => {
-    const MenuOptions = [
-        "Inicio",
-        "Manual de usuario",
-        "Servicios",
-        "Materiales",
-        "Presupuestos",
-        "Mensajes"
-    ]
+const MenuBackOffice = ({ setMenuSelected = () => {}}) => {
 
     return (
         <Grid columns="16" stackable className="menu-backoffice">
-            { MenuOptions.map((menu,index) => (
-                <Grid.Column width="16"  className="menu-backoffice__item">
-                    <div>{menu}</div>
+            { BACKOFFICE_OPTIONS.map((menu,index) => (
+                <Grid.Column onClick={() => setMenuSelected(menu.index)} width="16" key={index}  className="menu-backoffice__item">
+                    <div>
+                        {menu.name}
+                    </div>
                 </Grid.Column>
             ))}
         </Grid>
