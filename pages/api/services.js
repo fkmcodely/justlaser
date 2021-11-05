@@ -5,48 +5,48 @@ const bcrypt = require('bcrypt');
 import { BASE_URL_MONGO } from "../../constants/config";
 const url = BASE_URL_MONGO;
 
-export default function handlerManual(req,res) {
+export default function handlerServices(req,res) {
     const { method } = req;
    
     if(method === 'GET') {
-        getStepsManual(req,res);
+        getStepsServices(req,res);
     }
     if(method === 'POST') {
-        createStepManualStep(req,res);  
+        createStepService(req,res);  
     }
 }
 
 
-const getStepsManual = ({body},res) => {
+const getStepsServices = ({body},res) => {
     const fetchManualSteps = async () => {
         try {
             const { language } = body;
             const session = await MongoClient.connect(url);
             const db = session.db();
-            const collection = db.collection("ManualSteps");
+            const collection = db.collection("ServicesSteps");
             const fetchManul = await collection.find({ language : language }).toArray();
             
             res.status(200).json({
                 ...fetchManul
             });
         } catch(err) {
-            console.error(`Error al obtener pasos del manual ${err}`);
+            console.error(`Error al obtener pasos de servicios ${err}`);
             res.status(500).json({
-                message: 'No se puede obtener el manual de la base de datos.'
+                message: 'No se puede obtener los servicios de la base de datos.'
             });
         }
     }
     fetchManualSteps();
 };
 
-const createStepManualStep = ({ body },res) => {
+const createStepService = ({ body },res) => {
     const fetchInfoConfig = async () => {
         try {
-            const { title = '',image = '', video = '', order = '', description = '', buttons = {}, language = 'es' } = body;
+            const { title = '', image = '', video = '', order = '', description = '', buttons = {}, language = 'es' } = body;
             const session = await MongoClient.connect(url);
             const db = session.db();
-            const collection = db.collection("ManualSteps");
-            const createManualStep = await collection.insertOne({
+            const collection = db.collection("ServicesSteps");
+            const createServiceStep = await collection.insertOne({
                 title,
                 image,
                 video,
@@ -56,7 +56,7 @@ const createStepManualStep = ({ body },res) => {
                 language
             });
             res.status(200).json({
-                configurationSite: createManualStep
+                configurationSite: createServiceStep
             });
         } catch (err) {
             console.error(`Error al crear un paso del manual ${err}`);
