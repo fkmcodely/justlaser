@@ -1,14 +1,12 @@
 import React , { useEffect, useState } from 'react';
 import { Grid , Header , Button, Table, Modal, Divider, Form } from 'semantic-ui-react';
 import { useForm } from 'react-hook-form';
-
 import axios from "axios";
 
-const Manual = ({ option }) => {
+const Services = () => {
     const [modalAdd,setModalAdd] = useState(false);
-    
+
     return (
-        <>
         <Grid columns="16">
             <Grid.Row>
                 <Grid.Column width="12">
@@ -17,37 +15,36 @@ const Manual = ({ option }) => {
                     </Header>
                 </Grid.Column>
                 <Grid.Column width="4" style={{display: 'flex'}} floated="right">
-                    <p>Español/Ingles </p>
-                    <ModalAddManual rendered={<Button primary>+</Button>} open={modalAdd} setOpen={setModalAdd} />
+                    <p>Español/Ingles</p>
+                    <ModalAddService rendered={<Button primary>+</Button>} open={modalAdd} setOpen={setModalAdd} />
                 </Grid.Column>
             </Grid.Row>
             <Grid.Row>
                 <Grid.Column width="16">
-                    <ManualTable />
+                    <ServiceTable />
                 </Grid.Column>
             </Grid.Row>
         </Grid>
-       
-        </>
     );
 };
 
-const ManualTable = () => {
-    const [manualItems,setManualItems] = useState([]);
+const ServiceTable = () => {
+    const [serviceItems,setServiceItems] = useState([]);
     const [openItem,setOpenItem] = useState(false);
+
     useEffect(() => fetchItems(),[]);
     
     const fetchItems = () => {
-        const fetchManualItems = async () => {
+        const fetchServices = async () => {
             try {   
-                const fetchItems = await axios(`/api/manual`);
-                const { data : { steps } } = fetchItems;
-                setManualItems(steps);
+                const fetchItems = await axios(`/api/services`);
+                const { data : { services }} = fetchItems;
+                setServiceItems(services);
             } catch (err){
                 console.error(`Error al obtener lista del manual: ${err}`)
             }
         };
-        fetchManualItems();
+        fetchServices();
     };
 
     return (
@@ -57,15 +54,15 @@ const ManualTable = () => {
                     <Table.HeaderCell>ORDEN</Table.HeaderCell>
                     <Table.HeaderCell>TITULO</Table.HeaderCell>
                     <Table.HeaderCell>DESCRIPCIÓN</Table.HeaderCell>
-                    <Table.HeaderCell>RECURSO</Table.HeaderCell>
+                    <Table.HeaderCell>ESTADO</Table.HeaderCell>
                     <Table.HeaderCell>ACCIONES</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
             
             <Table.Body>
                 {
-                    manualItems.map((stepManual,index) => {
-                        const { title , image, video, order, description, buttons, language } = stepManual;
+                    serviceItems?.map((stepService,index) => {
+                        const { title , image, video, order, description, buttons, language } = stepService;
 
                         return (
                             <Table.Row>
@@ -74,7 +71,7 @@ const ManualTable = () => {
                                 <Table.Cell>{description}</Table.Cell>
                                 <Table.Cell>{image !== '' ? image : video}</Table.Cell>
                                 <Table.Cell>
-                                    <ModalEditManual step={stepManual} open={openItem} setOpen={setOpenItem} rendered={<p>Editar</p>} language='ES' />
+                                   <ModalEditService  step={stepService} open={openItem} setOpen={setOpenItem} rendered={<p>Editar</p>} language='ES'/>
                                 </Table.Cell>
                             </Table.Row>
                         )
@@ -86,7 +83,8 @@ const ManualTable = () => {
     )
 };
 
-const ModalAddManual = ({ open , setOpen, rendered , language = 'ES'}) => {
+
+const ModalAddService = ({ open , setOpen, rendered , language = 'ES'}) => {
     const [primary,setPrimary] = useState(false);
     const [secondary,setSecondary] = useState(false);
     const [textArea,setTextArea] = useState('');
@@ -105,7 +103,7 @@ const ModalAddManual = ({ open , setOpen, rendered , language = 'ES'}) => {
         setLoading(true);
         const fetchManual = async () => {
             try {
-                const request = await axios.post('/api/manual', {
+                const request = await axios.post('/api/services', {
                     ...fields,
                     language: language
                 });
@@ -123,15 +121,15 @@ const ModalAddManual = ({ open , setOpen, rendered , language = 'ES'}) => {
     return (
         <Modal {...modalProps} className="manual-modal-add">
             <Modal.Header>
-                <Header>Añadir nuevo paso del manual</Header>
+                <Header>Añadir un nuevo servicio</Header>
             </Modal.Header>
             <Modal.Content>
-                <p>Rellene los siguientes datos para crear un nuevo paso del manual 
-                (Recuerde que dependiendo del idioma seleccionado se creara el paso para un idioma o otro).</p>
+                <p>Rellene los siguientes datos para crear un nuevo servicio
+                (Recuerde que dependiendo del idioma seleccionado se creara el servicio para un idioma o otro).</p>
                 <Form onSubmit={handleSubmit(handleSubmitManual)} enctype="multipart/form-data">
-                    <input placeholder="Numero del manual:" type="number" {...register("order")} />
-                    <input type="text" {...register("title")} placeholder="Titulo del paso" />
-                    <input {...register("description")} placeholder="Describe la información del paso." />
+                    <input placeholder="Orden:" type="number" {...register("order")} />
+                    <input type="text" {...register("title")} placeholder="Titulo del servicio" />
+                    <input {...register("description")} placeholder="Describe la información del servicio." />
                     <div>
                         <p>Archivos multimedia:</p>
                         <input type="file" />
@@ -174,13 +172,14 @@ const ModalAddManual = ({ open , setOpen, rendered , language = 'ES'}) => {
     )
 }
 
-const ModalEditManual = ({ open , setOpen, rendered , language = 'ES', step}) => {
+
+const ModalEditService = ({ open , setOpen, rendered , language = 'ES', step}) => {
     const [primary,setPrimary] = useState(typeof step.buttons?.primary?.title !== 'undefined' ? true : false);
     const [secondary,setSecondary] = useState(typeof step.buttons?.secondary?.title !== 'undefined' ? true : false);
     const [textArea,setTextArea] = useState('');
     const [loading,setLoading] = useState(false);
-
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    
+    const { register, reset ,handleSubmit, watch, setValue,formState: { errors } } = useForm({
         defaultValues: {
             order: step.order,
             title: step.title,
@@ -208,11 +207,20 @@ const ModalEditManual = ({ open , setOpen, rendered , language = 'ES', step}) =>
         trigger: rendered
     };
 
+    useEffect(() => {
+        if(!open){
+            console.log('.>',step)
+            reset({
+                ...step
+            })
+        }
+    },[open])
+
     const handleSubmitManual = (fields) => {
         setLoading(true);
         const fetchManual = async () => {
             try {
-                const request = await axios.put('/api/manual', {
+                const request = await axios.put('/api/service', {
                     step: step.id,
                     ...fields,
                     language: language
@@ -220,7 +228,7 @@ const ModalEditManual = ({ open , setOpen, rendered , language = 'ES', step}) =>
                 setLoading(false);
                 setOpen(false);
             } catch (err) {
-                console.error(`Error al actualizar el paso del manual: ${err}`);
+                console.error(`Error al actualizar el servicio: ${err}`);
                 setLoading(false);
                 setOpen(false);
             }
@@ -231,7 +239,7 @@ const ModalEditManual = ({ open , setOpen, rendered , language = 'ES', step}) =>
     return (
         <Modal {...modalProps} className="manual-modal-edit">
             <Modal.Header>
-                <Header>Editar paso del manual</Header>
+                <Header>Editar servicio</Header>
             </Modal.Header>
             <Modal.Content>
                 <Form onSubmit={handleSubmit(handleSubmitManual)}>
@@ -280,4 +288,5 @@ const ModalEditManual = ({ open , setOpen, rendered , language = 'ES', step}) =>
     )
 }
 
-export default Manual;
+
+export default Services;

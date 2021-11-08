@@ -47,8 +47,7 @@ const editStepManual = ({ body },res) => {
             const session = await MongoClient.connect(url);
             const db = session.db();
             const collection = db.collection("ManualSteps");
-            const update = await collection.updateOne(filter,objectModified);
-            console.log(update)
+            await collection.updateOne(filter,objectModified);
             res.status(200).json({
                 message: 'Se a actualizado correctamente.'
             })

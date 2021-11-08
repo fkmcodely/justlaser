@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Grid , Header , Table , Label , Menu, Divider} from "semantic-ui-react";
 import { BASE_URL } from '../../../constants/config';
 import Manual from './Manual';
+import Services from "./Services";
 import SiteForm from './SiteForm';
 
 const Configuration = () => {
@@ -34,7 +35,7 @@ const Configuration = () => {
                     <Divider/>
                     { option === 0 && (<SiteForm option={option}/>)}
                     { option === 1 && (<Manual option={option} />)}
-                    
+                    { option === 2 && (<Services option={option} />)}
                 </Grid.Column>
             </Grid.Row>
             <Grid.Row>

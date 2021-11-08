@@ -14,8 +14,52 @@ export default function handlerServices(req,res) {
     if(method === 'POST') {
         createStepService(req,res);  
     }
+    if(method === 'PUT') {
+        editStepService(req,res);  
+    }
 }
 
+const editStepService = ({ body },res) => {
+    const editService = async () => {
+        try {
+            const {
+                title,
+                image,
+                video,
+                order,
+                description, 
+                buttons, 
+                language,
+                step
+            } = body;
+            const objectModified = {
+                $set: {
+                    title: title,
+                    image: image,
+                    video: video,
+                    order: order,
+                    description: description,
+                    buttons: buttons,
+                    language: language
+                }
+            };
+            const filter = { id : step};
+            const session = await MongoClient.connect(url);
+            const db = session.db();
+            const collection = db.collection("ServicesSteps");
+            await collection.updateOne(filter,objectModified);
+            res.status(200).json({
+                message: 'Se a actualizado correctamente.'
+            })
+        } catch (err) {
+            console.error(`Error al actualizar paso del manual: ${err}`)
+            res.status(500).json({
+                message: `Error al actualizar el manual.`
+            })
+        } 
+    };
+    editService();
+};
 
 const getStepsServices = ({body},res) => {
     const fetchManualSteps = async () => {
@@ -24,10 +68,10 @@ const getStepsServices = ({body},res) => {
             const session = await MongoClient.connect(url);
             const db = session.db();
             const collection = db.collection("ServicesSteps");
-            const fetchManul = await collection.find({ language : language }).toArray();
+            const fetchManul = await collection.find().toArray();
             
             res.status(200).json({
-                ...fetchManul
+                services: fetchManul
             });
         } catch(err) {
             console.error(`Error al obtener pasos de servicios ${err}`);
@@ -56,7 +100,7 @@ const createStepService = ({ body },res) => {
                 language
             });
             res.status(200).json({
-                configurationSite: createServiceStep
+                services: createServiceStep
             });
         } catch (err) {
             console.error(`Error al crear un paso del manual ${err}`);
