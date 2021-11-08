@@ -66,7 +66,6 @@ export default NextAuth({
     callbacks: {
         async signIn({ user , account, profile, email, crendetials}) {
             if (account.provider === 'google' || account.provider === 'facebook') {
-                console.log(profile.email)
                 const fetchUserAndCreate = async () => {
                     try {
                         

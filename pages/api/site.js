@@ -14,6 +14,9 @@ export default function handler(req,res) {
     if(method === 'POST') {
         ConfigSiteProps(req,res);  
     }
+    if(method === 'PUT') {
+        updateConfigSite(req,res);  
+    }
 }
 
 const getSiteProps = ({ body },res) => {
@@ -67,5 +70,37 @@ const ConfigSiteProps = ({ body }, res) => {
     fetchConfiguration();
 }
 
-
+const updateConfigSite = ({ body },res) => {
+    const updateInfo = async () => {
+        try {
+            const { sitename, email, maintance, phone } = body;
+            const site =  await MongoClient.connect(url);
+            const db = site.db();
+            const collection = db.collection('ConfigurationSite');
+            await collection.deleteMany();
+            const updateInformation = await collection.updateMany(
+                { id : '0001'},
+                { $set : { 
+                    id : '0001',
+                    sitename : sitename, 
+                    email : email,  
+                    maintance : maintance, 
+                    phone : phone.replace(' ',''), 
+                    GoogleApiDeveloper : '', 
+                    FacebookApiDeveloper : ''
+                 }},
+                 { upsert: true} 
+            )
+            res.status(200).json({
+                'message': `Se actualizo correctamente. ${updateInformation}`
+            })
+        } catch(err) {
+            console.error(`Error al actualizar la información: ${err}`)
+            res.status(500).json({
+                'message': `La actualizacion fallo. ${err}`
+            })
+        }
+    };
+    updateInfo();
+};
 

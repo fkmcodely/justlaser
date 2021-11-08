@@ -3,6 +3,7 @@ import { Container, Grid } from 'semantic-ui-react';
 import { BACKOFFICE_OPTIONS } from "../constants/backofficeMenu";
 import Contact from '../components/BackOffice/Contact/Contact';
 import Users from '../components/BackOffice/Users';
+import Configuration from '../components/BackOffice/Configuration/Configuration';
 
 const backoffice = () => {
     const [menuSelected,setMenuSelected] = useState(5)
@@ -23,6 +24,7 @@ const backoffice = () => {
                     <Grid.Column width="13">
                          { menuSelected === 5 && (<Users />)}
                          { menuSelected === 6 && (<Contact />)}
+                         { menuSelected === 7 && (<Configuration />)}
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

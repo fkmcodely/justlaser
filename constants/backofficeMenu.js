@@ -27,4 +27,8 @@ export const BACKOFFICE_OPTIONS = [
         name: "Mensajes",
         index: 6
     },
+    {
+        name: "Configuración General",
+        index: 7
+    },
 ]

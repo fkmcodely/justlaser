@@ -1,0 +1,46 @@
+.backoffice-configuration {
+    padding: 2.5rem 2rem !important;
+}
+
+.manual-modal-edit {
+    padding-bottom: 20px !important;
+    &__textarea {
+        height: 90px !important;
+    }
+    &__buttons {
+        display: flex;
+        .primary {
+            padding: 5px;
+            width: 50%;
+        }
+        .secondary {
+            padding: 5px;
+            width: 50%;
+        }
+    }
+    input {
+        margin-bottom: 10px !important;
+    }
+}
+
+
+.manual-modal-add {
+    padding-bottom: 20px !important;
+    &__textarea {
+        height: 90px !important;
+    }
+    &__buttons {
+        display: flex;
+        .primary {
+            padding: 5px;
+            width: 50%;
+        }
+        .secondary {
+            padding: 5px;
+            width: 50%;
+        }
+    }
+    input {
+        margin-bottom: 10px !important;
+    }
+}
