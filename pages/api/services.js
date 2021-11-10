@@ -74,7 +74,6 @@ const getStepsServices = ({body},res) => {
                 services: fetchManul
             });
         } catch(err) {
-            console.error(`Error al obtener pasos de servicios ${err}`);
             res.status(500).json({
                 message: 'No se puede obtener los servicios de la base de datos.'
             });

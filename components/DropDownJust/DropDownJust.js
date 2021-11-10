@@ -3,7 +3,7 @@ import { Accordion, Grid, Container, Header, Icon, Divider } from 'semantic-ui-r
 
 const DropDownJust = ({ title , list = [] }) => {
     const [selected,setSelected] = useState(0);
-
+    console.log(list)
     return (
         <Container className="dropdownjust">
             <Grid columns="16">
