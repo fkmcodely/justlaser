@@ -91,6 +91,7 @@ const ModalAddManual = ({ open , setOpen, rendered , language = 'ES'}) => {
     const [secondary,setSecondary] = useState(false);
     const [textArea,setTextArea] = useState('');
     const [loading,setLoading] = useState(false);
+    const [multimedia,setMultimedia] = useState('');
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     
     const modalProps = {
@@ -109,6 +110,15 @@ const ModalAddManual = ({ open , setOpen, rendered , language = 'ES'}) => {
                     ...fields,
                     language: language
                 });
+                //request.data.id
+                const data = new FormData();
+                data.append('file',multimedia);
+                const uploadMedia = await axios.post('/api/multimedia', data,{
+                    params: {
+                        id: request.data.id
+                    }
+                });
+                console.log(uploadMedia);
                 setLoading(false);
                 setOpen(false);
             } catch (err) {
@@ -128,13 +138,13 @@ const ModalAddManual = ({ open , setOpen, rendered , language = 'ES'}) => {
             <Modal.Content>
                 <p>Rellene los siguientes datos para crear un nuevo paso del manual 
                 (Recuerde que dependiendo del idioma seleccionado se creara el paso para un idioma o otro).</p>
-                <Form action="/api/manual" onSubmit={handleSubmit(handleSubmitManual)} enctype="multipart/form-data">
+                <Form onSubmit={handleSubmit(handleSubmitManual)}>
                     <input placeholder="Numero del manual:" type="number" {...register("order")} />
                     <input type="text" {...register("title")} placeholder="Titulo del paso" />
                     <input {...register("description")} placeholder="Describe la información del paso." />
                     <div>
                         <p>Archivos multimedia:</p>
-                        <input type="file" name="mediaManual" />
+                        <input onChange={(ev) => {setMultimedia(ev.target.files[0])}} type="file" name="mediaManual" />
                     </div>
                     <div className="manual-modal-add__buttons">
                         <p className="primary">

@@ -1,17 +1,19 @@
 import { MongoClient } from "mongodb";
 const { v4: uuidv4 } = require('uuid');
-import nextConnect from 'next-connect'
-import fs from "fs";
 import { BASE_URL_MONGO } from "../../constants/config";
 const url = BASE_URL_MONGO;
-import middleware from "../../middleware/middleware";
 
-const handler = nextConnect();
-handler.use(middleware);
-
-handler.post((req,res) => {createStepManualStep(req,res)})
-handler.get((req,res) => {getStepsManual(req,res)})
-handler.put((req,res) => {editStepManual(req,res)})
+export default (req,res) => {
+    if(req.method === 'POST') {
+        createStepManualStep(req,res)
+    };
+    if(req.method === 'GET') {
+        getStepsManual(req,res)
+    };
+    if(req.method === 'PUT') {
+        editStepManual(req,res)
+    };
+}
 
 const editStepManual = ({ body },res) => {
     const editStepManual = async () => {
@@ -76,8 +78,7 @@ const getStepsManual = ({body},res) => {
     fetchManualSteps();
 };
 
-const createStepManualStep = ({ body, files },res) => {
-    
+const createStepManualStep = ({ body },res) => {
     const fetchInfoConfig = async () => {
         try {
             const { title = '',image = '', video = '', order = '', description = '', buttons = {} } = body;
@@ -95,23 +96,9 @@ const createStepManualStep = ({ body, files },res) => {
                 buttons, 
                 language : 'ES'
             });
-            try {
-                fs.readFile(req.files.data[0].path, function (err,data) {
-                    fs.writeFile(`uploads/manual/${idManualStep}`,data, function (err) {
-                        if (err) {
-                            console.error(`Error al guardar fichero: ${err}`)
-                        } else {
-                            console.log('File uploaded successfully')
-                            res.status(200).json({
-                                message:'Todo creado correctamente.'
-                            })
-                        }
-                    })
-                })
-           } catch (err) {
-               console.error(`Error de subida: ${err}`)
-           }
+            
             res.status(200).json({
+                id: idManualStep,
                 configurationSite: createManualStep
             });
         } catch (err) {
@@ -124,13 +111,6 @@ const createStepManualStep = ({ body, files },res) => {
     fetchInfoConfig();
 };
 
-export const config = {
-    api: {
-      bodyParser: false
-    }
-}
-
-export default handler;
 
 
 
