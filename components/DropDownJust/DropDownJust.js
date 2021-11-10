@@ -1,7 +1,9 @@
-import React from 'react';
-import { Accordion, Grid, Container, Header, Icon } from 'semantic-ui-react';
+import React , { useState } from 'react';
+import { Accordion, Grid, Container, Header, Icon, Divider } from 'semantic-ui-react';
 
-const DropDownJust = ({ title }) => {
+const DropDownJust = ({ title , list = [] }) => {
+    const [selected,setSelected] = useState(0);
+
     return (
         <Container className="dropdownjust">
             <Grid columns="16">
@@ -12,40 +14,32 @@ const DropDownJust = ({ title }) => {
                         </Header>
                     </Grid.Column>
                 </Grid.Row>
+                <Divider/>
                 <Grid.Row className="dropdownjust__questions">
                     <Grid.Column width="14">
                         <Accordion fluid styled>
-                            <Accordion.Title>
-                                <Icon name="dropdown" />
-                                1. Elige los materiales que necesites.
-                            </Accordion.Title>
-                            <Accordion.Content>
-                                <p>Respuesta</p>
-                            </Accordion.Content>
+                            {
+                                list.map((option,index) => {
 
-                            <Accordion.Title>
-                                <Icon name="dropdown" />
-                                2. Descarga nuestra plantilla de trabajo.
-                            </Accordion.Title>
-                            <Accordion.Content>
-                                <p>Respuesta</p>
-                            </Accordion.Content>
-
-                            <Accordion.Title>
-                                <Icon name="dropdown" />
-                                3. Dibuja los tamaños de las planchas que hayas elegido y traza las piezas que necesites.
-                            </Accordion.Title>
-                            <Accordion.Content>
-                                <p>Respuesta</p>
-                            </Accordion.Content>
-
-                            <Accordion.Title>
-                                <Icon name="dropdown" />
-                                4. Iguala las capas según el tipo de corte
-                            </Accordion.Title>
-                            <Accordion.Content>
-                                <p>Respuesta</p>
-                            </Accordion.Content>
+                                    return(
+                                        <>
+                                            <Accordion.Title
+                                                active={selected === 0}
+                                                index={index}
+                                                onClick={() => setSelected(index)}
+                                            >
+                                            <Icon name='dropdown' />
+                                            {option.title}
+                                            </Accordion.Title>
+                                            <Accordion.Content active={selected === index}>
+                                            <p>
+                                               {option.description}
+                                            </p>
+                                            </Accordion.Content>
+                                        </>
+                                    )
+                                })
+                            }
                         </Accordion>
                     </Grid.Column>
                 </Grid.Row>
