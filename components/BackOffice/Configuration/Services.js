@@ -89,6 +89,7 @@ const ModalAddService = ({ open , setOpen, rendered , language = 'ES'}) => {
     const [secondary,setSecondary] = useState(false);
     const [textArea,setTextArea] = useState('');
     const [loading,setLoading] = useState(false);
+    const [multimedia,setMultimedia] = useState('');
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     
     const modalProps = {
@@ -106,6 +107,14 @@ const ModalAddService = ({ open , setOpen, rendered , language = 'ES'}) => {
                 const request = await axios.post('/api/services', {
                     ...fields,
                     language: language
+                });
+                const data = new FormData();
+                data.append('file',multimedia);
+                const uploadMedia = await axios.post('/api/multimedia',data,{
+                    params: {
+                        id: request.data.id,
+                        folder: 'services'
+                    }
                 });
                 setLoading(false);
                 setOpen(false);
@@ -132,7 +141,7 @@ const ModalAddService = ({ open , setOpen, rendered , language = 'ES'}) => {
                     <input {...register("description")} placeholder="Describe la información del servicio." />
                     <div>
                         <p>Archivos multimedia:</p>
-                        <input type="file" />
+                        <input onChange={ev => setMultimedia(ev.target.files[0])} type="file" name="mediaService" />
                     </div>
                     <div className="manual-modal-add__buttons">
                         <p className="primary">

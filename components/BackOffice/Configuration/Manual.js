@@ -114,10 +114,10 @@ const ModalAddManual = ({ open , setOpen, rendered , language = 'ES'}) => {
                 data.append('file',multimedia);
                 const uploadMedia = await axios.post('/api/multimedia', data,{
                     params: {
-                        id: request.data.id
+                        id: request.data.id,
+                        folder: 'manual'
                     }
                 });
-                console.log(uploadMedia);
                 setLoading(false);
                 setOpen(false);
             } catch (err) {

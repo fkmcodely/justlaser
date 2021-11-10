@@ -6,14 +6,13 @@ const handler = nextConnect();
 handler.use(middleware);
 
 handler.post((req,res) => {
-    console.log(req)
     saveImage(req,res)
 });
 
 const saveImage = ({ body , files, query } , res) => {
     try {
         fs.readFile(files.file[0].path , function (err,data) {
-            fs.writeFile(`public/uploads/${query.id}.png`,data, (err) => {
+            fs.writeFile(`public/uploads/${query.folder}/${query.id}.png`,data, (err) => {
                 if(err) {
                     console.error(`Error al guardar el fichero: ${err}`)
                 } else {

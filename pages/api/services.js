@@ -90,8 +90,9 @@ const createStepService = ({ body },res) => {
             const session = await MongoClient.connect(url);
             const db = session.db();
             const collection = db.collection("ServicesSteps");
+            const serviceId = uuidv4();
             const createServiceStep = await collection.insertOne({
-                id: uuidv4(),
+                id: serviceId,
                 title,
                 image,
                 video,
@@ -101,7 +102,7 @@ const createStepService = ({ body },res) => {
                 language
             });
             res.status(200).json({
-                services: createServiceStep
+                id: serviceId
             });
         } catch (err) {
             console.error(`Error al crear un paso del manual ${err}`);
