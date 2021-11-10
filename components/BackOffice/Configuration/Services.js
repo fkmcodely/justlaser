@@ -62,7 +62,7 @@ const ServiceTable = () => {
             <Table.Body>
                 {
                     serviceItems?.map((stepService,index) => {
-                        const { title , image, video, order, description, buttons, language } = stepService;
+                        const { id, title , image, video, order, description, buttons, language } = stepService;
 
                         return (
                             <Table.Row>
@@ -71,7 +71,7 @@ const ServiceTable = () => {
                                 <Table.Cell>{description}</Table.Cell>
                                 <Table.Cell>{image !== '' ? image : video}</Table.Cell>
                                 <Table.Cell>
-                                   <ModalEditService  step={stepService} open={openItem} setOpen={setOpenItem} rendered={<p>Editar</p>} language='ES'/>
+                                  <ModalEditService idService={id}  step={stepService} open={openItem} setOpen={setOpenItem} rendered={<p>Editar</p>} language='ES'/>
                                 </Table.Cell>
                             </Table.Row>
                         )
@@ -173,7 +173,7 @@ const ModalAddService = ({ open , setOpen, rendered , language = 'ES'}) => {
 }
 
 
-const ModalEditService = ({ open , setOpen, rendered , language = 'ES', step}) => {
+const ModalEditService = ({ idService, open , setOpen, rendered , language = 'ES', step}) => {
     const [primary,setPrimary] = useState(typeof step.buttons?.primary?.title !== 'undefined' ? true : false);
     const [secondary,setSecondary] = useState(typeof step.buttons?.secondary?.title !== 'undefined' ? true : false);
     const [textArea,setTextArea] = useState('');
@@ -209,7 +209,6 @@ const ModalEditService = ({ open , setOpen, rendered , language = 'ES', step}) =
 
     useEffect(() => {
         if(!open){
-            console.log('.>',step)
             reset({
                 ...step
             })

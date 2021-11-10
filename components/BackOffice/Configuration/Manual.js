@@ -128,13 +128,13 @@ const ModalAddManual = ({ open , setOpen, rendered , language = 'ES'}) => {
             <Modal.Content>
                 <p>Rellene los siguientes datos para crear un nuevo paso del manual 
                 (Recuerde que dependiendo del idioma seleccionado se creara el paso para un idioma o otro).</p>
-                <Form onSubmit={handleSubmit(handleSubmitManual)} enctype="multipart/form-data">
+                <Form action="/api/manual" onSubmit={handleSubmit(handleSubmitManual)} enctype="multipart/form-data">
                     <input placeholder="Numero del manual:" type="number" {...register("order")} />
                     <input type="text" {...register("title")} placeholder="Titulo del paso" />
                     <input {...register("description")} placeholder="Describe la información del paso." />
                     <div>
                         <p>Archivos multimedia:</p>
-                        <input type="file" />
+                        <input type="file" name="mediaManual" />
                     </div>
                     <div className="manual-modal-add__buttons">
                         <p className="primary">

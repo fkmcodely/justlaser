@@ -91,6 +91,7 @@ const createStepService = ({ body },res) => {
             const db = session.db();
             const collection = db.collection("ServicesSteps");
             const createServiceStep = await collection.insertOne({
+                id: uuidv4(),
                 title,
                 image,
                 video,
