@@ -89,8 +89,8 @@ const createStepManualStep = ({ body },res) => {
             const createManualStep = await collection.insertOne({
                 id: idManualStep,
                 title,
-                image,
-                video,
+                image: `${idManualStep}.png`,
+                video: `${idManualStep}.png`,
                 order,
                 description, 
                 buttons, 

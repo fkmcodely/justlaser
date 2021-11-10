@@ -110,7 +110,6 @@ const ModalAddManual = ({ open , setOpen, rendered , language = 'ES'}) => {
                     ...fields,
                     language: language
                 });
-                //request.data.id
                 const data = new FormData();
                 data.append('file',multimedia);
                 const uploadMedia = await axios.post('/api/multimedia', data,{

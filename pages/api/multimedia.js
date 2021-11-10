@@ -12,9 +12,8 @@ handler.post((req,res) => {
 
 const saveImage = ({ body , files, query } , res) => {
     try {
-        console.log(files,body)
         fs.readFile(files.file[0].path , function (err,data) {
-            fs.writeFile(`uploads/${query.id}`,data, (err) => {
+            fs.writeFile(`public/uploads/${query.id}.png`,data, (err) => {
                 if(err) {
                     console.error(`Error al guardar el fichero: ${err}`)
                 } else {
