@@ -29,12 +29,24 @@
         display: flex;
         flex: 1 1;
         .image {
-            width: 50%;
+            width: 35%;
             background-color:rgb(218, 168, 104);
+            img {
+                width: 100% !important;
+            }
         }
         .description {
+            display: flex;
+            flex-direction: column;
             padding-left: 1.5rem;
-            width: 50%;
+            width: 65%;
+            div {
+                display: flex;
+                justify-content: flex-end;
+                button {
+                    margin-left: 10px;
+                }
+            }
         }
     }
 }
