@@ -8,3 +8,33 @@
         padding: 30px 10px !important;
     }
 }
+
+.custom-dropdown {
+    display: flex;
+    justify-content: space-between;
+    &__title {
+
+    }
+    &__icon {
+        width: 100px;
+    }
+}
+
+.custom-dropdown-content {
+    padding-top: 25px !important;
+    padding-bottom: 25px !important;
+    background-color: #f1f2f3;
+
+    &__container {
+        display: flex;
+        flex: 1 1;
+        .image {
+            width: 50%;
+            background-color:rgb(218, 168, 104);
+        }
+        .description {
+            padding-left: 1.5rem;
+            width: 50%;
+        }
+    }
+}

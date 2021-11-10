@@ -22,7 +22,7 @@ export default function Manual() {
 
   return (
     <>
-      <DropDownJust list={manual} title={title} />
+      <DropDownJust list={manual} title={title} folder={'manual'}/>
     </>
   );
 }

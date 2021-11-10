@@ -1,7 +1,8 @@
 import React , { useState } from 'react';
-import { Accordion, Grid, Container, Header, Icon, Divider } from 'semantic-ui-react';
+import { Accordion, Grid, Container, Header, Icon, Divider, Image } from 'semantic-ui-react';
+import { BASE_URL } from '../../constants/config';
 
-const DropDownJust = ({ title , list = [] }) => {
+const DropDownJust = ({ title , list = [], folder = '' }) => {
     const [selected,setSelected] = useState(0);
     console.log(list)
     return (
@@ -20,21 +21,29 @@ const DropDownJust = ({ title , list = [] }) => {
                         <Accordion fluid styled>
                             {
                                 list.map((option,index) => {
-
                                     return(
                                         <>
                                             <Accordion.Title
+                                                key={index}
                                                 active={selected === 0}
                                                 index={index}
                                                 onClick={() => setSelected(index)}
                                             >
-                                            <Icon name='dropdown' />
-                                            {option.title}
+                                            <div className="custom-dropdown">
+                                                <h3 className="custom-dropdown__title">{option.title}</h3>
+                                                <Icon size="large" className="custom-dropdown__icon" name='plus' />
+                                            </div>
+                                            
                                             </Accordion.Title>
-                                            <Accordion.Content active={selected === index}>
-                                            <p>
-                                               {option.description}
-                                            </p>
+                                            <Accordion.Content className="custom-dropdown-content" active={selected === index}>
+                                                <div className="custom-dropdown-content__container">
+                                                    <div className="image">
+                                                        <Image src={`${BASE_URL}public/${folder}/${option.image}`} alt={option.title} />
+                                                    </div>
+                                                    <div className="description">
+                                                        <p>{option.description}</p>
+                                                    </div>
+                                                </div>
                                             </Accordion.Content>
                                         </>
                                     )
